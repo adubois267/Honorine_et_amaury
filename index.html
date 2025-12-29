@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Honorine et Amaury</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            kraft: {
+              bg: '#f3efe8',
+              card: '#fbf8f2',
+              border: '#d6cbb8',
+              text: '#4a3f35',
+              muted: '#7a6a58',
+              accent: '#b08968'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .card { transition: transform .25s ease, box-shadow .25s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,.12); }
+
+    .shimmer {
+      background: linear-gradient(90deg, rgba(0,0,0,0.04) 25%, rgba(0,0,0,0.08) 37%, rgba(0,0,0,0.04) 63%);
+      background-size: 400% 100%;
+      animation: shimmer 1.2s infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0 }
+      100% { background-position: -200% 0 }
+    }
+
+    input, button { font-size: 16px; }
+  </style>
+</head>
+
+<body class="bg-kraft-bg text-kraft-text">
+
+<header class="text-center py-8">
+  <h1 class="text-3xl font-serif font-semibold">Honorine &amp; Amaury</h1>
+  <p class="text-kraft-muted mt-1">11 juillet 2026</p>
+</header>
+
+<!-- 🎞️ Intro + infos pratiques -->
+<section class="max-w-5xl mx-auto px-4 mb-10">
+  <div class="rounded-2xl bg-kraft-card border border-kraft-border shadow">
+
+    <!-- Informations pratiques -->
+    <div class="p-6 border-t border-kraft-border">
+      <h3 class="text-lg font-semibold mb-4 text-center">Informations pratiques</h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+        <!-- Mairie -->
+        <div class="flex flex-col items-center gap-3">
+          <div class="w-14 h-14 rounded-full bg-kraft-accent/20 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 class="w-7 h-7 text-kraft-text fill-current">
+              <path d="M12 2 3 6v2h18V6l-9-4zm7 8H5v10h3v-6h8v6h3V10z"/>
+            </svg>
+          </div>
+
+          <p class="text-sm">
+            <strong>Cérémonie à la Mairie</strong><br>
+            11 h 20
+          </p>
+
+          <a
+            href="https://www.google.com/maps/place/Mairie+de+Marcq-en-Baroeul/@50.6735124,3.0915167,16z/data=!3m1!4b1!4m6!3m5!1s0x47c32a2e8bfd049b:0x4226726aa2f90b3a!8m2!3d50.6735124!4d3.094097!16s%2Fg%2F1tflfd89?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Trajet vers la mairie (Google Maps)"
+            title="Trajet (Google Maps)"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl
+                   bg-kraft-accent text-white shadow hover:opacity-90 active:scale-[0.99]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current">
+              <path d="M10 3a4 4 0 0 0-4 4c0 3 4 8 4 8s4-5 4-8a4 4 0 0 0-4-4zm0 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
+              <path d="M18 13a3 3 0 0 0-3 3c0 2.25 3 6 3 6s3-3.75 3-6a3 3 0 0 0-3-3zm0 4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+              <path d="M4 20h9v2H4z"/>
+            </svg>
+            <span class="text-sm font-semibold">Trajet</span>
+          </a>
+        </div>
+
+        <!-- Église -->
+        <div class="flex flex-col items-center gap-3">
+          <div class="w-14 h-14 rounded-full bg-kraft-accent/20 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 class="w-7 h-7 text-kraft-text fill-current">
+              <path d="M11 2h2v3h3v2h-3v3h-2V7H8V5h3V2zm-5 8 6-4 6 4v12h-4v-6h-4v6H6V10z"/>
+            </svg>
+          </div>
+
+          <p class="text-sm">
+            <strong>Cérémonie à l’Église</strong><br>
+            14 h 00
+          </p>
+
+          <a
+            href="https://www.google.com/maps/place/%C3%89glise+catholique+Saint-Chrysole+%C3%A0+Verlinghem+et+son+Cimeti%C3%A8re/@50.6811002,2.991601,17z/data=!3m1!4b1!4m6!3m5!1s0x47dcd527dd37aa8f:0x4184ddda7cd6b1d4!8m2!3d50.6811002!4d2.9941813!16s%2Fg%2F11c56rbg27?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Trajet vers l'église (Google Maps)"
+            title="Trajet (Google Maps)"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl
+                   bg-kraft-accent text-white shadow hover:opacity-90 active:scale-[0.99]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current">
+              <path d="M10 3a4 4 0 0 0-4 4c0 3 4 8 4 8s4-5 4-8a4 4 0 0 0-4-4zm0 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
+              <path d="M18 13a3 3 0 0 0-3 3c0 2.25 3 6 3 6s3-3.75 3-6a3 3 0 0 0-3-3zm0 4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+              <path d="M4 20h9v2H4z"/>
+            </svg>
+            <span class="text-sm font-semibold">Trajet</span>
+          </a>
+        </div>
+
+        <!-- Vin d'honneur -->
+        <div class="flex flex-col items-center gap-3">
+          <div class="w-14 h-14 rounded-full bg-kraft-accent/20 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 class="w-7 h-7 text-kraft-text fill-current">
+              <path d="M7 2h10v3c0 3-2.5 5-5 5s-5-2-5-5V2zm4 9v8H8v2h8v-2h-3v-8z"/>
+            </svg>
+          </div>
+
+          <p class="text-sm">
+            <strong>Vin d’honneur</strong><br>
+            17 h 00
+          </p>
+
+          <a
+            href="https://www.google.com/maps/place/Restaurant+Den+Oesterput/@50.8236719,3.2038266,17z/data=!3m1!4b1!4m6!3m5!1s0x47c33072514a0519:0x3c6871c272742083!8m2!3d50.823672!4d3.2086921!16s%2Fg%2F1tf0ps4r?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Trajet vers le vin d'honneur (Google Maps)"
+            title="Trajet (Google Maps)"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl
+                   bg-kraft-accent text-white shadow hover:opacity-90 active:scale-[0.99]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current">
+              <path d="M10 3a4 4 0 0 0-4 4c0 3 4 8 4 8s4-5 4-8a4 4 0 0 0-4-4zm0 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
+              <path d="M18 13a3 3 0 0 0-3 3c0 2.25 3 6 3 6s3-3.75 3-6a3 3 0 0 0-3-3zm0 4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+              <path d="M4 20h9v2H4z"/>
+            </svg>
+            <span class="text-sm font-semibold">Trajet</span>
+          </a>
+        </div>
+      </div>
+
+      <p class="text-xs text-kraft-muted mt-6 text-center">
+        Astuce : sur mobile, touchez “Trajet” pour ouvrir Google Maps.
+      </p>
+    </div>
+  </div>
+
+  <!-- Vidéo -->
+  <div class="p-4">
+    <div id="videoCard"
+         class="relative rounded-xl overflow-hidden bg-black cursor-pointer group">
+
+      <video id="introVideo"
+             class="w-full h-auto"
+             src="./intro.mov"
+             preload="metadata"
+             playsinline></video>
+
+      <div id="videoOverlay"
+           class="absolute inset-0 flex items-center justify-center
+                  bg-black/40 transition-opacity duration-300
+                  group-hover:bg-black/50">
+
+        <div class="flex flex-col items-center gap-3 text-white">
+          <div class="w-16 h-16 rounded-full bg-white/90 text-black
+                      flex items-center justify-center text-2xl shadow-lg">
+            ▶
+          </div>
+          <span class="text-sm tracking-wide">Découvrir notre voyage de noces</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 💝 Liste de mariage : idées + participation/paiement -->
+<section class="max-w-5xl mx-auto px-4 mb-10">
+  <div class="rounded-2xl bg-kraft-card border border-kraft-border shadow">
+
+    <div class="p-6 border-b border-kraft-border">
+      <h2 class="text-xl font-semibold">Liste de mariage</h2>
+      <p class="text-sm text-kraft-muted mt-1">
+        Vous pouvez participer à notre voyage de noces : choisissez une idée ci-dessous ou contribuez librement via PayPal / virement.
+      </p>
+    </div>
+
+    <div class="p-6 space-y-6">
+
+      <!-- ✅ 10 emplacements “activité” -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+
+        <!-- Remplacez href + img src + titres quand vous serez prêts -->
+        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
+          <img alt="Activité #1" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=60">
+          <div class="p-3">
+            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Activité #1</p>
+            <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
+          </div>
+        </a>
+
+        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
+          <img alt="Activité #2" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=900&q=60">
+          <div class="p-3">
+            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Activité #2</p>
+            <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
+          </div>
+        </a>
+
+        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
+          <img alt="Activité #3" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&w=900&q=60">
+          <div class="p-3">
+            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Activité #3</p>
+            <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
+          </div>
+        </a>
+
+        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
+          <img alt="Activité #4" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=60">
+          <div class="p-3">
+            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Activité #4</p>
+            <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
+          </div>
+        </a>
+
+        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
+          <img alt="Activité #5" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=900&q=60">
+          <div class="p-3">
+            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Activité #5</p>
+            <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
+          </div>
+        </a>
+
+        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
+          <img alt="Activité #6" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?auto=format&fit=crop&w=900&q=60">
+          <div class="p-3">
+            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Activité #6</p>
+            <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
+          </div>
+        </a>
+
+        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
+          <img alt="Activité #7" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=60">
+          <div class="p-3">
+            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Activité #7</p>
+            <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
+          </div>
+        </a>
+
+        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
+          <img alt="Activité #8" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?auto=format&fit=crop&w=900&q=60">
+          <div class="p-3">
+            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Activité #8</p>
+            <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
+          </div>
+        </a>
+
+        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
+          <img alt="Activité #9" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&w=900&q=60">
+          <div class="p-3">
+            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Activité #9</p>
+            <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
+          </div>
+        </a>
+
+        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
+          <img alt="Activité #10" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=900&q=60">
+          <div class="p-3">
+            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Activité #10</p>
+            <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- ✅ Participation / paiement -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- PayPal -->
+        <div class="rounded-xl border border-kraft-border bg-kraft-bg p-4">
+          <h3 class="font-semibold mb-2">PayPal</h3>
+          <p class="text-sm text-kraft-muted mb-4">
+            Scannez le QR code pour accéder au paiement PayPal.
+          </p>
+          <div class="flex justify-center">
+            <img id="paypalQr" alt="QR code PayPal" class="w-72" src="./paypal.jpg"/>
+          </div>
+          <p class="text-xs text-kraft-muted mt-3 text-center">
+            Montant libre.
+          </p>
+        </div>
+
+        <!-- Virement -->
+        <div class="rounded-xl border border-kraft-border bg-kraft-bg p-4">
+          <h3 class="font-semibold mb-2">Virement bancaire</h3>
+          <p class="text-sm text-kraft-muted mb-4">Informations pour un virement.</p>
+
+          <dl class="text-sm space-y-3">
+            <div class="flex gap-3">
+              <dt class="w-28 text-kraft-muted">Titulaire</dt>
+              <dd class="font-medium">NOM Prénom</dd>
+            </div>
+            <div class="flex gap-3">
+              <dt class="w-28 text-kraft-muted">IBAN</dt>
+              <dd class="font-mono break-all">FR76 XXXX XXXX XXXX XXXX XXXX XXX</dd>
+            </div>
+            <div class="flex gap-3">
+              <dt class="w-28 text-kraft-muted">BIC</dt>
+              <dd class="font-mono">XXXXXXXXXXX</dd>
+            </div>
+            <div class="flex gap-3">
+              <dt class="w-28 text-kraft-muted">Objet</dt>
+              <dd>Mariage Honorine &amp; Amaury</dd>
+            </div>
+          </dl>
+        </div>
+
+      </div>
+
+      <div class="rounded-xl border border-kraft-border bg-kraft-accent/20 p-4">
+        <p class="text-sm text-kraft-text">
+          <strong>Pas de panique :</strong>
+          il y aura toujours la boîte pour le jour du mariage.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 🖼️ Galerie photos (avec upload intégré) -->
+<section class="max-w-5xl mx-auto px-4 mb-10">
+  <div class="rounded-2xl bg-kraft-card border border-kraft-border shadow">
+
+    <div class="p-6 border-b border-kraft-border flex items-start justify-between gap-4 flex-col sm:flex-row">
+      <div>
+        <h2 class="text-xl font-semibold">Partageons nos photos ici</h2>
+        <p class="text-sm text-kraft-muted mt-1">
+          Ajoutez vos photos et découvrez les 10 dernières en direct.
+        </p>
+      </div>
+
+      <div class="flex items-stretch gap-2 flex-col sm:flex-row w-full sm:w-auto">
+        <button id="btnPickUpload"
+                class="inline-flex items-center justify-center gap-2
+                       px-5 py-3 rounded-xl bg-kraft-accent text-white
+                       font-semibold shadow hover:opacity-95 active:scale-[0.99]
+                       disabled:opacity-50 w-full sm:w-auto">
+          <span aria-hidden="true">📷</span>
+          Ajouter des photos
+        </button>
+
+        <button id="btnRefresh"
+                class="inline-flex items-center justify-center gap-2
+                       px-5 py-3 rounded-xl border border-kraft-border
+                       bg-kraft-accent text-white font-semibold
+                       shadow hover:opacity-95 active:scale-[0.99]
+                       w-full sm:w-auto">
+          Rafraîchir
+        </button>
+
+        <a href="https://drive.google.com/drive/folders/0B1Pqut4RPRDSODY0Tl9iS3hneGM"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="inline-flex items-center justify-center gap-2
+                  px-5 py-3 rounded-xl bg-kraft-accent text-white
+                  font-semibold shadow hover:opacity-95 active:scale-[0.99]
+                  w-full sm:w-auto">
+          Voir toutes les photos de l'album
+        </a>
+      </div>
+    </div>
+
+    <div class="p-6">
+      <input id="fileInput" type="file" accept="image/*" multiple capture="environment" class="hidden">
+
+      <div id="grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 min-h-[160px]"></div>
+
+      <p id="uploadMsg" class="text-sm text-kraft-text mt-4 text-center"></p>
+
+      <p id="empty" class="text-sm text-kraft-muted mt-3 hidden">
+        Aucune image trouvée pour le moment…
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- QR de la page -->
+<section class="text-center mb-10">
+  <h3 class="text-lg font-semibold mb-2">Scannez pour ouvrir cette page :</h3>
+  <div id="qrcode" class="inline-block p-3 bg-white rounded-2xl shadow border border-kraft-border"></div>
+</section>
+
+<footer class="text-center text-xs text-kraft-muted py-8">
+  Page de partage — Honorine &amp; Amaury
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+  // =====================
+  // CONFIG
+  // =====================
+  const WEBHOOK = "https://script.google.com/macros/s/AKfycbyEaTVz3z04727WLIfN4gTiLb1vLnCn1Cj44_1cKbvQfF99DfiiaRoHlelEJT7_jPg7-w/exec";
+  const TOKEN   = "secret123";
+
+  // =====================
+  // QR Code page
+  // =====================
+  new QRCode(document.getElementById("qrcode"), {
+    text: window.location.href,
+    width: 160,
+    height: 160
+  });
+
+  // =====================
+  // Galerie (Drive)
+  // =====================
+  const grid   = document.getElementById('grid');
+  const empty  = document.getElementById('empty');
+  const btnRef = document.getElementById('btnRefresh');
+
+  function showSkeleton(n = 10) {
+    grid.innerHTML = '';
+    for (let i = 0; i < n; i++) {
+      const s = document.createElement('div');
+      s.className = 'h-40 rounded-xl shimmer';
+      grid.appendChild(s);
+    }
+    empty.classList.add('hidden');
+  }
+
+  function render(files) {
+    grid.innerHTML = '';
+    if (!files || files.length === 0) {
+      empty.classList.remove('hidden');
+      return;
+    }
+    empty.classList.add('hidden');
+
+    for (const f of files) {
+      const a = document.createElement('a');
+      a.href = f.openUrl || f.viewUrl || '#';
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.className = 'card block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm';
+
+      const img = document.createElement('img');
+      const src = f.thumbUrl || f.viewUrl || '';
+      img.src = src ? (src + (src.includes('?') ? '&' : '?') + 'cb=' + Date.now()) : '';
+      img.alt = f.name || 'photo';
+      img.loading = 'lazy';
+      img.referrerPolicy = 'no-referrer';
+      img.className = 'w-full h-40 object-cover';
+
+      const bar = document.createElement('div');
+      bar.className = 'px-3 py-2 text-xs text-kraft-muted flex items-center justify-between gap-2';
+
+      const name = document.createElement('div');
+      name.className = 'truncate';
+      name.textContent = (f.name || '').slice(0, 40);
+
+      const time = document.createElement('time');
+      time.textContent = f.createdTime ? new Date(f.createdTime).toLocaleString() : '';
+      time.className = 'text-[10px] text-kraft-muted whitespace-nowrap';
+
+      bar.appendChild(name);
+      bar.appendChild(time);
+      a.appendChild(img);
+      a.appendChild(bar);
+      grid.appendChild(a);
+    }
+  }
+
+  async function loadLatest() {
+    try {
+      showSkeleton();
+      const url = `${WEBHOOK}?action=list&token=${encodeURIComponent(TOKEN)}&cb=${Date.now()}`;
+      const res = await fetch(url, { method: 'GET' });
+
+      const ct = res.headers.get('content-type') || '';
+      if (!ct.includes('application/json')) {
+        const txt = await res.text();
+        console.warn('Réponse non-JSON:', txt.slice(0, 300));
+        throw new Error('Réponse non-JSON (déploiement / accès ?)');
+      }
+
+      const data = await res.json();
+      if (res.ok && data.ok) render(data.files);
+      else {
+        console.warn('List failed:', data);
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+      }
+    } catch (e) {
+      console.warn('loadLatest error:', e);
+      grid.innerHTML = '';
+      empty.classList.remove('hidden');
+    }
+  }
+
+  btnRef.addEventListener('click', loadLatest);
+
+  // =====================
+  // Upload (mobile-first : 1 action)
+  // =====================
+  const input = document.getElementById('fileInput');
+  const btnPick = document.getElementById('btnPickUpload');
+  const msg   = document.getElementById('uploadMsg');
+
+  function fileToDataURL(file) {
+    return new Promise((resolve, reject) => {
+      const fr = new FileReader();
+      fr.onload = () => resolve(fr.result);
+      fr.onerror = reject;
+      fr.readAsDataURL(file);
+    });
+  }
+
+  let refreshTimer = null;
+  function refreshAfterUpload() {
+    if (refreshTimer) clearTimeout(refreshTimer);
+    refreshTimer = setTimeout(loadLatest, 700);
+  }
+
+  btnPick.addEventListener('click', () => input.click());
+
+  input.addEventListener('change', async () => {
+    const files = input.files;
+    if (!files || files.length === 0) return;
+
+    btnPick.disabled = true;
+    msg.textContent = 'Envoi en cours…';
+
+    let ok = 0, fail = 0;
+    let lastErr = null;
+
+    for (const f of files) {
+      try {
+        const dataURL = await fileToDataURL(f);
+        const payload = {
+          filename: f.name,
+          mimeType: f.type || 'application/octet-stream',
+          dataBase64: dataURL
+        };
+
+        const res = await fetch(`${WEBHOOK}?token=${encodeURIComponent(TOKEN)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.ok) {
+          ok++;
+          refreshAfterUpload();
+        } else {
+          fail++;
+          lastErr = (data && data.error) ? data.error : `HTTP ${res.status}`;
+          console.warn('Upload failed:', data);
+        }
+      } catch (e) {
+        fail++;
+        lastErr = String(e);
+        console.warn('Upload exception:', e);
+      }
+    }
+
+    btnPick.disabled = false;
+    msg.textContent =
+      fail === 0
+        ? `✅ ${ok} photo(s) envoyée(s). Merci !`
+        : `⚠️ ${ok} ok, ${fail} erreur(s). Dernière erreur: ${lastErr || 'inconnue'}`;
+
+    input.value = '';
+  });
+
+  // =====================
+  // Vidéo click-to-play
+  // =====================
+  const video   = document.getElementById('introVideo');
+  const overlay = document.getElementById('videoOverlay');
+  const card    = document.getElementById('videoCard');
+
+  card.addEventListener('click', () => {
+    video.muted = false;
+    video.play();
+    overlay.style.opacity = '0';
+    overlay.style.pointerEvents = 'none';
+  });
+
+  video.addEventListener('ended', () => {
+    overlay.style.opacity = '1';
+    overlay.style.pointerEvents = 'auto';
+  });
+
+  // Chargement initial galerie
+  loadLatest();
+</script>
+
+</body>
+</html>
