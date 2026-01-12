@@ -45,9 +45,30 @@
 
 <body class="bg-kraft-bg text-kraft-text">
 
+<!-- ✅ Overlay upload + progression -->
+<div id="uploadOverlay"
+     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-[1px]">
+  <div class="bg-white/95 rounded-2xl px-6 py-5 shadow-lg border border-kraft-border text-center w-[min(22rem,92vw)]">
+    <div class="mx-auto mb-3 w-10 h-10 rounded-full border-4 border-kraft-border border-t-kraft-accent animate-spin"></div>
+
+    <p class="font-semibold" id="overlayTitle">Envoi en cours…</p>
+    <p class="text-sm text-kraft-muted mt-1" id="overlayProgressText">Préparation…</p>
+
+    <!-- Barre de progression -->
+    <div class="mt-4 h-2 w-full rounded-full bg-kraft-bg border border-kraft-border overflow-hidden">
+      <div id="overlayProgressBar" class="h-full w-0 bg-kraft-accent"></div>
+    </div>
+
+    <p class="text-xs text-kraft-muted mt-3" id="overlayHint">Merci de patienter.</p>
+  </div>
+</div>
+
 <header class="text-center py-8">
-  <h1 class="text-3xl font-serif font-semibold">Honorine &amp; Amaury</h1>
-  <p class="text-kraft-muted mt-1">11 juillet 2026</p>
+  <!-- ✅ Titre plus grand -->
+  <h1 class="text-4xl sm:text-5xl font-serif font-semibold tracking-tight">
+    Honorine &amp; Amaury
+  </h1>
+  <p class="text-kraft-muted mt-2">11 juillet 2026</p>
 </header>
 
 <!-- 🎞️ Intro + infos pratiques -->
@@ -161,20 +182,13 @@
 
   <!-- Vidéo -->
   <div class="p-4">
-    <div id="videoCard"
-         class="relative rounded-xl overflow-hidden bg-black cursor-pointer group">
-
-      <video id="introVideo"
-             class="w-full h-auto"
-             src="./intro.mov"
-             preload="metadata"
-             playsinline></video>
+    <div id="videoCard" class="relative rounded-xl overflow-hidden bg-black cursor-pointer group">
+      <video id="introVideo" class="w-full h-auto" src="./intro.mov" preload="metadata" playsinline></video>
 
       <div id="videoOverlay"
            class="absolute inset-0 flex items-center justify-center
                   bg-black/40 transition-opacity duration-300
                   group-hover:bg-black/50">
-
         <div class="flex flex-col items-center gap-3 text-white">
           <div class="w-16 h-16 rounded-full bg-white/90 text-black
                       flex items-center justify-center text-2xl shadow-lg">
@@ -200,10 +214,8 @@
 
     <div class="p-6 space-y-6">
 
-      <!-- ✅ 10 emplacements “activité” -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-
-        <!-- Remplacez href + img src + titres quand vous serez prêts -->
+        <!-- 10 placeholders -->
         <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
           <img alt="Activité #1" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=60">
           <div class="p-3">
@@ -211,7 +223,6 @@
             <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
           </div>
         </a>
-
         <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
           <img alt="Activité #2" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=900&q=60">
           <div class="p-3">
@@ -219,7 +230,6 @@
             <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
           </div>
         </a>
-
         <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
           <img alt="Activité #3" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&w=900&q=60">
           <div class="p-3">
@@ -227,7 +237,6 @@
             <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
           </div>
         </a>
-
         <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
           <img alt="Activité #4" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=60">
           <div class="p-3">
@@ -235,7 +244,6 @@
             <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
           </div>
         </a>
-
         <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
           <img alt="Activité #5" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=900&q=60">
           <div class="p-3">
@@ -243,7 +251,6 @@
             <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
           </div>
         </a>
-
         <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
           <img alt="Activité #6" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?auto=format&fit=crop&w=900&q=60">
           <div class="p-3">
@@ -251,7 +258,6 @@
             <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
           </div>
         </a>
-
         <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
           <img alt="Activité #7" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=60">
           <div class="p-3">
@@ -259,7 +265,6 @@
             <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
           </div>
         </a>
-
         <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
           <img alt="Activité #8" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?auto=format&fit=crop&w=900&q=60">
           <div class="p-3">
@@ -267,7 +272,6 @@
             <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
           </div>
         </a>
-
         <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
           <img alt="Activité #9" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&w=900&q=60">
           <div class="p-3">
@@ -275,7 +279,6 @@
             <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
           </div>
         </a>
-
         <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
           <img alt="Activité #10" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=900&q=60">
           <div class="p-3">
@@ -283,31 +286,21 @@
             <p class="text-xs text-kraft-muted mt-1">Titre à personnaliser</p>
           </div>
         </a>
-
       </div>
 
-      <!-- ✅ Participation / paiement -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-        <!-- PayPal -->
         <div class="rounded-xl border border-kraft-border bg-kraft-bg p-4">
           <h3 class="font-semibold mb-2">PayPal</h3>
-          <p class="text-sm text-kraft-muted mb-4">
-            Scannez le QR code pour accéder au paiement PayPal.
-          </p>
+          <p class="text-sm text-kraft-muted mb-4">Scannez le QR code pour accéder au paiement PayPal.</p>
           <div class="flex justify-center">
             <img id="paypalQr" alt="QR code PayPal" class="w-72" src="./paypal.jpg"/>
           </div>
-          <p class="text-xs text-kraft-muted mt-3 text-center">
-            Montant libre.
-          </p>
+          <p class="text-xs text-kraft-muted mt-3 text-center">Montant libre.</p>
         </div>
 
-        <!-- Virement -->
         <div class="rounded-xl border border-kraft-border bg-kraft-bg p-4">
           <h3 class="font-semibold mb-2">Virement bancaire</h3>
           <p class="text-sm text-kraft-muted mb-4">Informations pour un virement.</p>
-
           <dl class="text-sm space-y-3">
             <div class="flex gap-3">
               <dt class="w-28 text-kraft-muted">Titulaire</dt>
@@ -327,14 +320,10 @@
             </div>
           </dl>
         </div>
-
       </div>
 
       <div class="rounded-xl border border-kraft-border bg-kraft-accent/20 p-4">
-        <p class="text-sm text-kraft-text">
-          <strong>Pas de panique :</strong>
-          il y aura toujours la boîte pour le jour du mariage.
-        </p>
+        <p class="text-sm text-kraft-text"><strong>Pas de panique :</strong> il y aura toujours la boîte pour le jour du mariage.</p>
       </div>
 
     </div>
@@ -344,13 +333,10 @@
 <!-- 🖼️ Galerie photos (avec upload intégré) -->
 <section class="max-w-5xl mx-auto px-4 mb-10">
   <div class="rounded-2xl bg-kraft-card border border-kraft-border shadow">
-
     <div class="p-6 border-b border-kraft-border flex items-start justify-between gap-4 flex-col sm:flex-row">
       <div>
         <h2 class="text-xl font-semibold">Partageons nos photos ici</h2>
-        <p class="text-sm text-kraft-muted mt-1">
-          Ajoutez vos photos et découvrez les 10 dernières en direct.
-        </p>
+        <p class="text-sm text-kraft-muted mt-1">Ajoutez vos photos et découvrez les 10 dernières en direct.</p>
       </div>
 
       <div class="flex items-stretch gap-2 flex-col sm:flex-row w-full sm:w-auto">
@@ -359,8 +345,8 @@
                        px-5 py-3 rounded-xl bg-kraft-accent text-white
                        font-semibold shadow hover:opacity-95 active:scale-[0.99]
                        disabled:opacity-50 w-full sm:w-auto">
-          <span aria-hidden="true">📷</span>
-          Ajouter des photos
+          <span aria-hidden="true">🖼️</span>
+          Choisir des photos
         </button>
 
         <button id="btnRefresh"
@@ -386,14 +372,9 @@
 
     <div class="p-6">
       <input id="fileInput" type="file" accept="image/*" multiple class="hidden">
-
       <div id="grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 min-h-[160px]"></div>
-
       <p id="uploadMsg" class="text-sm text-kraft-text mt-4 text-center"></p>
-
-      <p id="empty" class="text-sm text-kraft-muted mt-3 hidden">
-        Aucune image trouvée pour le moment…
-      </p>
+      <p id="empty" class="text-sm text-kraft-muted mt-3 hidden">Aucune image trouvée pour le moment…</p>
     </div>
   </div>
 </section>
@@ -515,11 +496,45 @@
   btnRef.addEventListener('click', loadLatest);
 
   // =====================
-  // Upload (mobile-first : 1 action)
+  // Upload + overlay + progression
   // =====================
   const input = document.getElementById('fileInput');
   const btnPick = document.getElementById('btnPickUpload');
-  const msg   = document.getElementById('uploadMsg');
+  const msg = document.getElementById('uploadMsg');
+
+  const overlayEl = document.getElementById('uploadOverlay');
+  const overlayProgressText = document.getElementById('overlayProgressText');
+  const overlayProgressBar = document.getElementById('overlayProgressBar');
+
+  const BTN_LABEL_IDLE = btnPick.textContent;
+
+  function showOverlay() {
+    overlayEl.classList.remove('hidden');
+    overlayEl.classList.add('flex');
+    document.body.classList.add('overflow-hidden');
+  }
+  function hideOverlay() {
+    overlayEl.classList.add('hidden');
+    overlayEl.classList.remove('flex');
+    document.body.classList.remove('overflow-hidden');
+  }
+
+  function setBtnLoading(isLoading) {
+    if (isLoading) {
+      btnPick.disabled = true;
+      btnPick.textContent = 'Envoi…';
+    } else {
+      btnPick.disabled = false;
+      btnPick.textContent = BTN_LABEL_IDLE;
+    }
+  }
+
+  function setProgress(done, total) {
+    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    overlayProgressText.textContent = `${done}/${total} envoyée(s)…`;
+    overlayProgressBar.style.width = `${pct}%`;
+    msg.textContent = `Envoi en cours… (${done}/${total})`;
+  }
 
   function fileToDataURL(file) {
     return new Promise((resolve, reject) => {
@@ -530,62 +545,71 @@
     });
   }
 
-  let refreshTimer = null;
-  function refreshAfterUpload() {
-    if (refreshTimer) clearTimeout(refreshTimer);
-    refreshTimer = setTimeout(loadLatest, 700);
-  }
-
   btnPick.addEventListener('click', () => input.click());
 
   input.addEventListener('change', async () => {
     const files = input.files;
     if (!files || files.length === 0) return;
 
-    btnPick.disabled = true;
+    const total = files.length;
+    let done = 0;
+
+    showOverlay();
+    setBtnLoading(true);
+    overlayProgressBar.style.width = '0%';
+    overlayProgressText.textContent = '0/' + total + ' envoyée(s)…';
     msg.textContent = 'Envoi en cours…';
 
     let ok = 0, fail = 0;
     let lastErr = null;
 
-    for (const f of files) {
-      try {
-        const dataURL = await fileToDataURL(f);
-        const payload = {
-          filename: f.name,
-          mimeType: f.type || 'application/octet-stream',
-          dataBase64: dataURL
-        };
+    try {
+      for (const f of files) {
+        try {
+          const dataURL = await fileToDataURL(f);
+          const payload = {
+            filename: f.name,
+            mimeType: f.type || 'application/octet-stream',
+            dataBase64: dataURL
+          };
 
-        const res = await fetch(`${WEBHOOK}?token=${encodeURIComponent(TOKEN)}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify(payload)
-        });
+          const res = await fetch(`${WEBHOOK}?token=${encodeURIComponent(TOKEN)}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(payload)
+          });
 
-        const data = await res.json().catch(() => ({}));
-        if (res.ok && data.ok) {
-          ok++;
-          refreshAfterUpload();
-        } else {
+          const data = await res.json().catch(() => ({}));
+          if (res.ok && data.ok) {
+            ok++;
+          } else {
+            fail++;
+            lastErr = (data && data.error) ? data.error : `HTTP ${res.status}`;
+            console.warn('Upload failed:', data);
+          }
+        } catch (e) {
           fail++;
-          lastErr = (data && data.error) ? data.error : `HTTP ${res.status}`;
-          console.warn('Upload failed:', data);
+          lastErr = String(e);
+          console.warn('Upload exception:', e);
+        } finally {
+          done++;
+          setProgress(done, total);
         }
-      } catch (e) {
-        fail++;
-        lastErr = String(e);
-        console.warn('Upload exception:', e);
       }
+
+      if (ok > 0) {
+        await loadLatest();
+      }
+
+      msg.textContent =
+        fail === 0
+          ? `✅ ${ok} photo(s) envoyée(s). Merci !`
+          : `⚠️ ${ok} ok, ${fail} erreur(s). Dernière erreur: ${lastErr || 'inconnue'}`;
+    } finally {
+      hideOverlay();
+      setBtnLoading(false);
+      input.value = '';
     }
-
-    btnPick.disabled = false;
-    msg.textContent =
-      fail === 0
-        ? `✅ ${ok} photo(s) envoyée(s). Merci !`
-        : `⚠️ ${ok} ok, ${fail} erreur(s). Dernière erreur: ${lastErr || 'inconnue'}`;
-
-    input.value = '';
   });
 
   // =====================
@@ -607,7 +631,6 @@
     overlay.style.pointerEvents = 'auto';
   });
 
-  // Chargement initial galerie
   loadLatest();
 </script>
 
