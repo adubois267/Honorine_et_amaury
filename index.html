@@ -17,8 +17,12 @@
               border: '#d6cbb8',
               text: '#4a3f35',
               muted: '#7a6a58',
-              accent: '#b08968'
+              accent: '#b08968',
+              accentDark: '#8d6e54'
             }
+          },
+          boxShadow: {
+            soft: '0 8px 24px rgba(74, 63, 53, 0.08)'
           }
         }
       }
@@ -26,745 +30,1098 @@
   </script>
 
   <style>
-    .card { transition: transform .25s ease, box-shadow .25s ease; }
-    .card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,.12); }
+    .card {
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(0,0,0,.10);
+      border-color: rgba(176, 137, 104, .45);
+    }
+
+    .gift-card {
+      display: block;
+      border-radius: 1rem;
+      overflow: hidden;
+      background: #f3efe8;
+      border: 1px solid #d6cbb8;
+      box-shadow: 0 2px 8px rgba(74, 63, 53, 0.04);
+    }
+
+    .gift-media {
+      position: relative;
+    }
+
+    .gift-badge {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      padding: .42rem .75rem;
+      border-radius: 9999px;
+      background: rgba(60, 52, 44, 0.9);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      backdrop-filter: blur(3px);
+      box-shadow: 0 4px 10px rgba(0,0,0,.16);
+      z-index: 2;
+    }
+
+    .gift-badge svg {
+      width: 0.85rem;
+      height: 0.85rem;
+      flex: none;
+    }
+
+    .gift-offered {
+      opacity: 0.82;
+      background: #ebe7df;
+      border-color: #cfc4b3;
+      box-shadow: inset 0 0 0 1px rgba(122, 106, 88, 0.08);
+    }
+
+    .gift-offered .gift-image {
+      filter: grayscale(0.65) saturate(0.55) brightness(0.9);
+    }
+
+    .gift-offered h3,
+    .gift-offered p,
+    .gift-offered .gift-price {
+      color: #7b6f63 !important;
+    }
+
+    .gift-offered .gift-price {
+      background: rgba(122, 106, 88, 0.10);
+    }
+
+    .gift-offered .gift-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.16);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .gift-price {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 0.55rem;
+      padding: .28rem .55rem;
+      border-radius: 9999px;
+      background: rgba(176, 137, 104, .12);
+      color: #4a3f35;
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    .gift-progress {
+      margin-top: 0.9rem;
+    }
+
+    .gift-progress-bar {
+      width: 100%;
+      height: 0.5rem;
+      border-radius: 9999px;
+      background: rgba(122, 106, 88, 0.18);
+      overflow: hidden;
+    }
+
+    .gift-progress-fill {
+      height: 100%;
+      border-radius: 9999px;
+      background: #b08968;
+    }
+
+    .gift-progress-text {
+      margin-top: 0.45rem;
+      font-size: 0.78rem;
+      color: #7a6a58;
+      font-weight: 600;
+    }
+
+    .section-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .35rem .75rem;
+      border: 1px solid #d6cbb8;
+      border-radius: 9999px;
+      background: #fbf8f2;
+      color: #7a6a58;
+      font-size: .8rem;
+      font-weight: 600;
+    }
+
+    .trip-stage {
+      border-top: 1px solid rgba(214, 203, 184, 0.9);
+      padding-top: 2rem;
+      margin-top: 2rem;
+    }
+
+    .trip-stage:first-of-type {
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    .trip-stage-header {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (min-width: 768px) {
+      .trip-stage-header {
+        flex-direction: row;
+        align-items: end;
+        justify-content: space-between;
+      }
+    }
+
+    .trip-stage-title {
+      font-size: 1.35rem;
+      line-height: 1.2;
+      font-weight: 700;
+      color: #4a3f35;
+    }
+
+    .trip-stage-desc {
+      color: #7a6a58;
+      font-size: .94rem;
+      max-width: 52rem;
+    }
 
     .shimmer {
-      background: linear-gradient(90deg, rgba(0,0,0,0.04) 25%, rgba(0,0,0,0.08) 37%, rgba(0,0,0,0.04) 63%);
+      background: linear-gradient(
+        90deg,
+        rgba(0,0,0,0.04) 25%,
+        rgba(0,0,0,0.08) 37%,
+        rgba(0,0,0,0.04) 63%
+      );
       background-size: 400% 100%;
       animation: shimmer 1.2s infinite;
     }
+
     @keyframes shimmer {
-      0% { background-position: 200% 0 }
-      100% { background-position: -200% 0 }
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
     }
 
-    input, button { font-size: 16px; }
+    input, button {
+      font-size: 16px;
+    }
   </style>
 </head>
 
 <body class="bg-kraft-bg text-kraft-text">
 
-<!-- ✅ Overlay upload + progression -->
-<div id="uploadOverlay"
-     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-[1px]">
-  <div class="bg-white/95 rounded-2xl px-6 py-5 shadow-lg border border-kraft-border text-center w-[min(22rem,92vw)]">
-    <div class="mx-auto mb-3 w-10 h-10 rounded-full border-4 border-kraft-border border-t-kraft-accent animate-spin"></div>
+  <!-- Overlay upload + progression -->
+  <div id="uploadOverlay"
+       class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-[1px]">
+    <div class="bg-white/95 rounded-2xl px-6 py-5 shadow-lg border border-kraft-border text-center w-[min(22rem,92vw)]">
+      <div class="mx-auto mb-3 w-10 h-10 rounded-full border-4 border-kraft-border border-t-kraft-accent animate-spin"></div>
 
-    <p class="font-semibold" id="overlayTitle">Envoi en cours…</p>
-    <p class="text-sm text-kraft-muted mt-1" id="overlayProgressText">Préparation…</p>
+      <p class="font-semibold" id="overlayTitle">Envoi en cours…</p>
+      <p class="text-sm text-kraft-muted mt-1" id="overlayProgressText">Préparation…</p>
 
-    <!-- Barre de progression -->
-    <div class="mt-4 h-2 w-full rounded-full bg-kraft-bg border border-kraft-border overflow-hidden">
-      <div id="overlayProgressBar" class="h-full w-0 bg-kraft-accent"></div>
-    </div>
-
-    <p class="text-xs text-kraft-muted mt-3" id="overlayHint">Merci de patienter.</p>
-  </div>
-</div>
-
-<header class="text-center py-8">
-  <!-- ✅ Titre plus grand -->
-  <h1 class="text-4xl sm:text-5xl font-serif font-semibold tracking-tight">
-    Honorine &amp; Amaury
-  </h1>
-  <p class="text-kraft-muted mt-2">11 juillet 2026</p>
-</header>
-
-<!-- 🎞️ Intro + infos pratiques -->
-<section class="max-w-5xl mx-auto px-4 mb-10">
-  <div class="rounded-2xl bg-kraft-card border border-kraft-border shadow">
-
-    <!-- Informations pratiques -->
-    <div class="p-6 border-t border-kraft-border">
-      <h3 class="text-lg font-semibold mb-4 text-center">Informations pratiques</h3>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-        <!-- Mairie -->
-        <div class="flex flex-col items-center gap-3">
-          <div class="w-14 h-14 rounded-full bg-kraft-accent/20 flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                 class="w-7 h-7 text-kraft-text fill-current">
-              <path d="M12 2 3 6v2h18V6l-9-4zm7 8H5v10h3v-6h8v6h3V10z"/>
-            </svg>
-          </div>
-
-          <p class="text-sm">
-            <strong>Cérémonie à la Mairie</strong><br>
-            11 h 20
-          </p>
-
-          <a
-            href="https://www.google.com/maps/place/Mairie+de+Marcq-en-Baroeul/@50.6735124,3.0915167,16z/data=!3m1!4b1!4m6!3m5!1s0x47c32a2e8bfd049b:0x4226726aa2f90b3a!8m2!3d50.6735124!4d3.094097!16s%2Fg%2F1tflfd89?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Trajet vers la mairie (Google Maps)"
-            title="Trajet (Google Maps)"
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl
-                   bg-kraft-accent text-white shadow hover:opacity-90 active:scale-[0.99]">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current">
-              <path d="M10 3a4 4 0 0 0-4 4c0 3 4 8 4 8s4-5 4-8a4 4 0 0 0-4-4zm0 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
-              <path d="M18 13a3 3 0 0 0-3 3c0 2.25 3 6 3 6s3-3.75 3-6a3 3 0 0 0-3-3zm0 4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-              <path d="M4 20h9v2H4z"/>
-            </svg>
-            <span class="text-sm font-semibold">Trajet</span>
-          </a>
-        </div>
-
-        <!-- Église -->
-        <div class="flex flex-col items-center gap-3">
-          <div class="w-14 h-14 rounded-full bg-kraft-accent/20 flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                 class="w-7 h-7 text-kraft-text fill-current">
-              <path d="M11 2h2v3h3v2h-3v3h-2V7H8V5h3V2zm-5 8 6-4 6 4v12h-4v-6h-4v6H6V10z"/>
-            </svg>
-          </div>
-
-          <p class="text-sm">
-            <strong>Cérémonie à l’Église</strong><br>
-            14 h 30
-          </p>
-
-          <a
-            href="https://www.google.com/maps/place/%C3%89glise+catholique+Saint-Chrysole+%C3%A0+Verlinghem+et+son+Cimeti%C3%A8re/@50.6811002,2.991601,17z/data=!3m1!4b1!4m6!3m5!1s0x47dcd527dd37aa8f:0x4184ddda7cd6b1d4!8m2!3d50.6811002!4d2.9941813!16s%2Fg%2F11c56rbg27?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Trajet vers l'église (Google Maps)"
-            title="Trajet (Google Maps)"
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl
-                   bg-kraft-accent text-white shadow hover:opacity-90 active:scale-[0.99]">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current">
-              <path d="M10 3a4 4 0 0 0-4 4c0 3 4 8 4 8s4-5 4-8a4 4 0 0 0-4-4zm0 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
-              <path d="M18 13a3 3 0 0 0-3 3c0 2.25 3 6 3 6s3-3.75 3-6a3 3 0 0 0-3-3zm0 4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-              <path d="M4 20h9v2H4z"/>
-            </svg>
-            <span class="text-sm font-semibold">Trajet</span>
-          </a>
-        </div>
-
-        <!-- Vin d'honneur -->
-        <div class="flex flex-col items-center gap-3">
-          <div class="w-14 h-14 rounded-full bg-kraft-accent/20 flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                 class="w-7 h-7 text-kraft-text fill-current">
-              <path d="M7 2h10v3c0 3-2.5 5-5 5s-5-2-5-5V2zm4 9v8H8v2h8v-2h-3v-8z"/>
-            </svg>
-          </div>
-
-          <p class="text-sm">
-            <strong>Vin d’honneur</strong><br>
-            17 h 00
-          </p>
-
-          <a
-            href="https://www.google.com/maps/place/Restaurant+Den+Oesterput/@50.8236719,3.2038266,17z/data=!3m1!4b1!4m6!3m5!1s0x47c33072514a0519:0x3c6871c272742083!8m2!3d50.823672!4d3.2086921!16s%2Fg%2F1tf0ps4r?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Trajet vers le vin d'honneur (Google Maps)"
-            title="Trajet (Google Maps)"
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl
-                   bg-kraft-accent text-white shadow hover:opacity-90 active:scale-[0.99]">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current">
-              <path d="M10 3a4 4 0 0 0-4 4c0 3 4 8 4 8s4-5 4-8a4 4 0 0 0-4-4zm0 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
-              <path d="M18 13a3 3 0 0 0-3 3c0 2.25 3 6 3 6s3-3.75 3-6a3 3 0 0 0-3-3zm0 4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-              <path d="M4 20h9v2H4z"/>
-            </svg>
-            <span class="text-sm font-semibold">Trajet</span>
-          </a>
-        </div>
+      <div class="mt-4 h-2 w-full rounded-full bg-kraft-bg border border-kraft-border overflow-hidden">
+        <div id="overlayProgressBar" class="h-full w-0 bg-kraft-accent"></div>
       </div>
 
-      <p class="text-xs text-kraft-muted mt-6 text-center">
-        Astuce : sur mobile, touchez “Trajet” pour ouvrir Google Maps.
+      <p class="text-xs text-kraft-muted mt-3" id="overlayHint">Merci de patienter.</p>
+    </div>
+  </div>
+
+  <header class="text-center py-10 px-4">
+    <div class="max-w-3xl mx-auto">
+      <p class="section-chip mx-auto mb-4">Mariage • 11 juillet 2026</p>
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif font-semibold tracking-tight">
+        Honorine &amp; Amaury
+      </h1>
+      <p class="text-kraft-muted mt-4 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">
+        Merci de célébrer ce moment avec nous. Vous trouverez ici les informations pratiques,
+        notre liste de mariage et l’espace photo à partager ensemble.
       </p>
     </div>
-  </div>
+  </header>
 
-  
-</section>
-
-<!-- 💝 Liste de mariage : idées + participation/paiement -->
-<section class="max-w-5xl mx-auto px-4 mb-10">
-  <div class="rounded-2xl bg-kraft-card border border-kraft-border shadow">
-
-    <div class="p-6 border-b border-kraft-border">
-      <h2 class="text-xl font-semibold">Liste de mariage</h2>
-      <p class="text-sm text-kraft-muted mt-1">
-        <b>Participer à notre voyage de noces : 15 jours d'immersion en Irlande 🇮🇪 dans des terres chargées d'histoire et de légendes !</b>
-      </p>
-      <p>Contribuez librement via PayPal ou par virement. </p>
-    </div>
-
-     <div class="rounded-xl border border-kraft-border bg-kraft-accent/20 p-4">
-        <p class="text-sm text-kraft-text"><strong>Pas de panique :</strong> il y aura toujours la boîte pour le jour du mariage 🙂 </p>
-      </div>
-    <div class="p-6 space-y-6">
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        <!-- 10 placeholders -->
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #1" class="w-full aspect-[4/3] object-cover" src="./images/air-journal_Aer-Lingus-A321XLR-600x310.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Vol en avion - 518 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Paris - Dublin</p>
-          </div>
-        </a>
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #2" class="w-full aspect-[4/3] object-cover" src="./images/toyota_yaris.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Location de la voiture : 650€</p>
-            <p class="text-xs text-kraft-muted mt-1">Boîte auto obligatoire vu qu'is roulent à gauche.</p>
-          </div>
-        </a>
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #3" class="w-full aspect-[4/3] object-cover" src="./images/Road trip.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Essence - 600 €</p>
-            <p class="text-xs text-kraft-muted mt-1">1400 km de road trip, un long périple nous attend le long de la Wild Atlantic Way !</p>
-          </div>
-        </a>
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #4" class="w-full aspect-[4/3] object-cover" src="./images/Temple-Bar-Dublin.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Dublin Pass - 220 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Visites des lieux emblématiques de la capitale</p>
-          </div>
-        </a>
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #5" class="w-full aspect-[4/3] object-cover" src="./images/Trinity_College_-_Great_Court_02.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Dublin : Hôtel - 390 €</p>
-            <p class="text-xs text-kraft-muted mt-1">3 nuits au Trinity college </p>
-          </div>
-        </a>
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #6" class="w-full aspect-[4/3] object-cover" src="./images/Full-Irish-Breakfast-in-a-skillet.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Dublin:  petit-déjeuners - 36 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Irish breakfast</p>
-          </div>
-        </a>
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #6" class="w-full aspect-[4/3] object-cover" src="./images/707208607.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Cobh :  hébergement 2 nuits - 370 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Lynwood house, sa vue sur la mer et son spa privatif...</p>
-          </div>
-        </a>
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #7" class="w-full aspect-[4/3] object-cover" src="images/smallhero-desktop.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Cobh : visite de la ville- 60 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Visite guidé de Cobh et cork city gaol la prison des femmes.</p>
-          </div>
-        </a>
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #7" class="w-full aspect-[4/3] object-contain" src="images/whitestar.webp">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Cobh : Titanic experience - 26 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Bureau de la White Star Line (la compagnie du Titanic)</p>
-          </div>
-        </a>
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #7" class="w-full aspect-[4/3] object-cover" src="./images/unnamed.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Fish & chips : Leo Burdock - 30 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Famous fish & chips since 1913 ! </p>
-          </div>
-        </a>
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #8" class="w-full aspect-[4/3] object-cover" src="./images/skelig.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Dingle : excurtion en bateau et randonnés - 170 €  </p>
-            <p class="text-xs text-kraft-muted mt-1">Dans la baie de Dingle</p>
-          </div>
-        </a>
-        
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <div class="relative">
-            <img alt="Activité #10" class="w-full aspect-[4/3] object-cover grayscale opacity-70" src="images/fish-and-chips-dublin.jpg">
-            <div class="absolute inset-0 flex items-center justify-center">
-              <span class="bg-black/65 text-white text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wide">Offert ✅ </span>
-            </div>
-          </div>
-          <div class="p-3">
-            <p class="text-sm font-semibold">Dingle :  Dîner - 60 €</p>
-            Irish style !</p>
-          </div>
-        </a>
-        
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #9" class="w-full aspect-[4/3] object-cover" src="./images/gap_of_dunloe1.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">killarney - hébergement 2 nuits - 330 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Haven Suites</p>
-          </div>
-        </a>
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #9" class="w-full aspect-[4/3] object-cover" src="./images/cheval.avif">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">killarney - randonnées à cheval - 361 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Ballade à cheval et randonnés dans le parc national.</p>
-          </div>
-        </a>
-
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #9" class="w-full aspect-[4/3] object-cover" src="./images/velo.avif">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">killarney - location de vélo - 66 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Beacoup d'endroits à visiter en si peu de temps.</p>
-          </div>
-        </a>
-         <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #6" class="w-full aspect-[4/3] object-cover" src="./images/gastronomie-irlandaise.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">killarney :  3 Dîners - 180 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Irish style</p>
-          </div>
-        </a>
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #10" class="w-full aspect-[4/3] object-cover" src="./images/ireland-dunquin-pier-along-slea-head-drive.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Dingle - hébergement 1 nuit - 190 €</p>
-            <p class="text-xs text-kraft-muted mt-1"> Mount Brandon Hostel. Visite du Ring of Kerry</p>
-          </div>
-        </a>
-
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #10" class="w-full aspect-[4/3] object-cover" src="./images/190437084.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">West Coast Lodge -   hébergement 1 nuit - 121 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Visite de la plage de Lahinch et des falaise de Moher.</p>
-          </div>
-        </a>
-
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <div class="relative">
-            <img alt="Activité #10" class="w-full aspect-[4/3] object-cover grayscale opacity-70" src="images/kylemore.jpg">
-            <div class="absolute inset-0 flex items-center justify-center">
-              <span class="bg-black/65 text-white text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wide">Offert ✅ </span>
-            </div>
-          </div>
-          <div class="p-3">
-            <p class="text-sm font-semibold"> Connemara 2 nuits - 280 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Visite de l'abbaye de Kylemore, la plus grande d'Irlande et randonnée à pied et à cheval dans le parc national</p>
-          </div>
-        </a>
-
-         <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #6" class="w-full aspect-[4/3] object-cover" src="./images/irish_stew.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Kylemore :  Dîner - 65 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Irish style en amoureux face au lac.</p>
-          </div>
-        </a>
-
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #10" class="w-full aspect-[4/3] object-cover" src="images/DSC_5960.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2"> Galway & îles d'Aran- 140 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Visite de la ville et des îles d'Aran pour voir comment sont réalisés les pulls aux motifs torsadés.</p>
-          </div>
-        </a>
-
-         <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #6" class="w-full aspect-[4/3] object-cover" src="./images/Irish-Recipes.webp">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Galway:  Dîner - 60 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Irish style </p>
-          </div>
-        </a>
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #6" class="w-full aspect-[4/3] object-cover" src="./images/d9ea9f67.avif">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Galway:  Shearwater hotel & spa - 300 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Après ce périple, nous avons bien mérité un peu de repos. </p>
-          </div>
-        </a>
-
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <div class="relative">
-            <img alt="Activité #10" class="w-full aspect-[4/3] object-cover grayscale opacity-70" src="./images/the_shearwater_hotel_-_00018_copy.jpg">
-            <div class="absolute inset-0 flex items-center justify-center">
-              <span class="bg-black/65 text-white text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wide">Offert ✅ </span>
-            </div>
-          </div>
-          <div class="p-3">
-            <p class="text-sm font-semibold">Galway:  Shearwater afternoon tea - 40 €</p>
-            Petite pause sucrée.</p>
-          </div>
-        </a>
-
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #6" class="w-full aspect-[4/3] object-cover" src="./images/shearwater_hotel_-_spa_cms_treatment_room.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Galway:  Shearwater spa - 200 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Petit moment de détente à deux. </p>
-          </div>
-        </a>
-
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #6" class="w-full aspect-[4/3] object-cover" src="./images/rest_image_1_1.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Galway:  dîner - 80 €</p>
-            <p class="text-xs text-kraft-muted mt-1">dîner de clotûre du voyage. </p>
-          </div>
-        </a>
-
-         <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #6" class="w-full aspect-[4/3] object-cover" src="./images/maxresdefault.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Vélo gravel #1 :  Achat - 800 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Un vélo de qualité pour des balades en amoureux. </p>
-          </div>
-        </a>
-        <a href="#" class="card group block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm">
-          <img alt="Activité #6" class="w-full aspect-[4/3] object-cover" src="./images/maxresdefault.jpg">
-          <div class="p-3">
-            <p class="text-sm font-semibold group-hover:underline underline-offset-2">Vélo gravel #2 :  Achat - 800 €</p>
-            <p class="text-xs text-kraft-muted mt-1">Un vélo de qualité pour des balades en amoureux. </p>
-          </div>
-        </a>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="rounded-xl border border-kraft-border bg-kraft-bg p-4">
-          <h3 class="font-semibold mb-2">PayPal</h3>
-          <p class="text-sm text-kraft-muted mb-4">Scannez le QR code pour accéder au paiement PayPal.</p>
-          <div class="flex justify-center">
-            <img id="paypalQr" alt="QR code PayPal" class="w-72" src="./paypal.jpg"/>
-          </div>
-          <p class="text-xs text-kraft-muted mt-3 text-center">Montant libre.</p>
+  <!-- Infos pratiques -->
+  <section class="max-w-5xl mx-auto px-4 mb-10">
+    <div class="rounded-3xl bg-kraft-card border border-kraft-border shadow-soft overflow-hidden">
+      <div class="p-6 sm:p-8">
+        <div class="text-center mb-8">
+          <p class="section-chip mx-auto mb-3">Informations utiles</p>
+          <h2 class="text-2xl font-semibold">Informations pratiques</h2>
+          <p class="text-sm text-kraft-muted mt-2">Tous les lieux importants de la journée en un coup d’œil.</p>
         </div>
 
-        <div class="rounded-xl border border-kraft-border bg-kraft-bg p-4">
-          <h3 class="font-semibold mb-2">Virement bancaire</h3>
-          <p class="text-sm text-kraft-muted mb-4">Informations pour le virement. N'hésitez pas à indiquer dans l'objet les activités auxquelles vous participez.</p>
-          <dl class="text-sm space-y-3">
-            <div class="flex gap-3">
-              <dt class="w-28 text-kraft-muted">Titulaire</dt>
-              <dd class="font-medium">M DUBOIS Amaury</dd>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+          <div class="rounded-2xl border border-kraft-border bg-kraft-bg p-6 shadow-sm">
+            <div class="w-14 h-14 rounded-full bg-kraft-accent/20 flex items-center justify-center mx-auto mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-7 h-7 text-kraft-text fill-current">
+                <path d="M12 2 3 6v2h18V6l-9-4zm7 8H5v10h3v-6h8v6h3V10z"/>
+              </svg>
             </div>
-            <div class="flex gap-3">
-              <dt class="w-28 text-kraft-muted">IBAN</dt>
-              <dd class="font-mono break-all">FR76 4061 8803 5600 0401 4439 648</dd>
+            <p class="text-base font-semibold">Cérémonie à la mairie</p>
+            <p class="text-kraft-muted text-sm mt-1">11 h 20</p>
+            <a
+              href="https://www.google.com/maps/place/Mairie+de+Marcq-en-Baroeul/@50.6735124,3.0915167,16z/data=!3m1!4b1!4m6!3m5!1s0x47c32a2e8bfd049b:0x4226726aa2f90b3a!8m2!3d50.6735124!4d3.094097!16s%2Fg%2F1tflfd89?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-5 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-kraft-accent text-white shadow hover:opacity-90 active:scale-[0.99]">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current">
+                <path d="M10 3a4 4 0 0 0-4 4c0 3 4 8 4 8s4-5 4-8a4 4 0 0 0-4-4zm0 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
+                <path d="M18 13a3 3 0 0 0-3 3c0 2.25 3 6 3 6s3-3.75 3-6a3 3 0 0 0-3-3zm0 4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                <path d="M4 20h9v2H4z"/>
+              </svg>
+              <span class="text-sm font-semibold">Trajet</span>
+            </a>
+          </div>
+
+          <div class="rounded-2xl border border-kraft-border bg-kraft-bg p-6 shadow-sm">
+            <div class="w-14 h-14 rounded-full bg-kraft-accent/20 flex items-center justify-center mx-auto mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-7 h-7 text-kraft-text fill-current">
+                <path d="M11 2h2v3h3v2h-3v3h-2V7H8V5h3V2zm-5 8 6-4 6 4v12h-4v-6h-4v6H6V10z"/>
+              </svg>
             </div>
-            <div class="flex gap-3">
-              <dt class="w-28 text-kraft-muted">BIC</dt>
-              <dd class="font-mono">BOUS FRPP XXX</dd>
+            <p class="text-base font-semibold">Cérémonie à l’église</p>
+            <p class="text-kraft-muted text-sm mt-1">14 h 30</p>
+            <a
+              href="https://www.google.com/maps/place/%C3%89glise+catholique+Saint-Chrysole+%C3%A0+Verlinghem+et+son+Cimeti%C3%A8re/@50.6811002,2.991601,17z/data=!3m1!4b1!4m6!3m5!1s0x47dcd527dd37aa8f:0x4184ddda7cd6b1d4!8m2!3d50.6811002!4d2.9941813!16s%2Fg%2F11c56rbg27?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-5 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-kraft-accent text-white shadow hover:opacity-90 active:scale-[0.99]">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current">
+                <path d="M10 3a4 4 0 0 0-4 4c0 3 4 8 4 8s4-5 4-8a4 4 0 0 0-4-4zm0 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
+                <path d="M18 13a3 3 0 0 0-3 3c0 2.25 3 6 3 6s3-3.75 3-6a3 3 0 0 0-3-3zm0 4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                <path d="M4 20h9v2H4z"/>
+              </svg>
+              <span class="text-sm font-semibold">Trajet</span>
+            </a>
+          </div>
+
+          <div class="rounded-2xl border border-kraft-border bg-kraft-bg p-6 shadow-sm">
+            <div class="w-14 h-14 rounded-full bg-kraft-accent/20 flex items-center justify-center mx-auto mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-7 h-7 text-kraft-text fill-current">
+                <path d="M7 2h10v3c0 3-2.5 5-5 5s-5-2-5-5V2zm4 9v8H8v2h8v-2h-3v-8z"/>
+              </svg>
             </div>
-            <div class="flex gap-3">
-              <dt class="w-28 text-kraft-muted">Objet</dt>
-              <dd>Mariage Honorine &amp; Amaury</dd>
-            </div>
-          </dl>
+            <p class="text-base font-semibold">Vin d’honneur</p>
+            <p class="text-kraft-muted text-sm mt-1">17 h 00</p>
+            <a
+              href="https://www.google.com/maps/place/Restaurant+Den+Oesterput/@50.8236719,3.2038266,17z/data=!3m1!4b1!4m6!3m5!1s0x47c33072514a0519:0x3c6871c272742083!8m2!3d50.823672!4d3.2086921!16s%2Fg%2F1tf0ps4r?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-5 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-kraft-accent text-white shadow hover:opacity-90 active:scale-[0.99]">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current">
+                <path d="M10 3a4 4 0 0 0-4 4c0 3 4 8 4 8s4-5 4-8a4 4 0 0 0-4-4zm0 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
+                <path d="M18 13a3 3 0 0 0-3 3c0 2.25 3 6 3 6s3-3.75 3-6a3 3 0 0 0-3-3zm0 4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                <path d="M4 20h9v2H4z"/>
+              </svg>
+              <span class="text-sm font-semibold">Trajet</span>
+            </a>
+          </div>
+        </div>
+
+        <p class="text-xs text-kraft-muted mt-6 text-center">
+          Astuce : sur mobile, touchez “Trajet” pour ouvrir Google Maps.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Liste de mariage -->
+  <section class="max-w-6xl mx-auto px-4 mb-10">
+    <div class="rounded-3xl bg-kraft-card border border-kraft-border shadow-soft overflow-hidden">
+
+      <div class="p-6 sm:p-8 border-b border-kraft-border bg-gradient-to-b from-white/40 to-transparent">
+        <div class="text-center max-w-3xl mx-auto">
+          <p class="section-chip mx-auto mb-3">Voyage de noces</p>
+          <h2 class="text-2xl sm:text-3xl font-semibold">Liste de mariage</h2>
+          <p class="text-sm sm:text-base text-kraft-muted mt-3 leading-relaxed">
+            Participez à notre voyage de noces :
+            <strong>15 jours d’immersion en Irlande 🇮🇪</strong>,
+            dans des terres chargées d’histoire et de légendes.
+          </p>
+          <p class="text-sm text-kraft-muted mt-2">
+            Chaque étape correspond à un moment de notre voyage.
+          </p>
         </div>
       </div>
 
-     
-
-    </div>
-  </div>
-</section>
-
-<!-- 🖼️ Galerie photos (avec upload intégré) -->
-<section class="max-w-5xl mx-auto px-4 mb-10">
-  <div class="rounded-2xl bg-kraft-card border border-kraft-border shadow">
-    <div class="p-6 border-b border-kraft-border flex items-start justify-between gap-4 flex-col sm:flex-row">
-      <div>
-        <h2 class="text-xl font-semibold">Partageons nos photos ici</h2>
-        <p class="text-sm text-kraft-muted mt-1">Ajoutez vos photos et découvrez les 10 dernières en direct.</p>
+      <div class="px-6 sm:px-8 pt-6">
+        <div class="rounded-2xl border border-kraft-border bg-kraft-accent/15 p-4 text-center">
+          <p class="text-sm text-kraft-text">
+            <strong>Pas de panique :</strong> il y aura toujours la boîte le jour du mariage 🙂
+          </p>
+        </div>
       </div>
 
-      <div class="flex items-stretch gap-2 flex-col sm:flex-row w-full sm:w-auto">
-        <button id="btnPickUpload"
-                class="inline-flex items-center justify-center gap-2
-                       px-5 py-3 rounded-xl bg-kraft-accent text-white
-                       font-semibold shadow hover:opacity-95 active:scale-[0.99]
-                       disabled:opacity-50 w-full sm:w-auto">
-          <span aria-hidden="true">🖼️</span>
-          Choisir des photos
-        </button>
+      <div class="p-6 sm:p-8">
 
-        <button id="btnRefresh"
-                class="inline-flex items-center justify-center gap-2
-                       px-5 py-3 rounded-xl border border-kraft-border
-                       bg-kraft-accent text-white font-semibold
-                       shadow hover:opacity-95 active:scale-[0.99]
-                       w-full sm:w-auto">
-          Rafraîchir
-        </button>
+        <!-- Départ -->
+        <div class="trip-stage">
+          <div class="trip-stage-header">
+            <div>
+              <p class="section-chip mb-3">Étape 1</p>
+              <h3 class="trip-stage-title">Le départ</h3>
+              <p class="trip-stage-desc">Le grand saut vers l’Irlande : avion, voiture et premières routes du voyage.</p>
+            </div>
+          </div>
 
-        <a href="https://drive.google.com/drive/folders/0B1Pqut4RPRDSODY0Tl9iS3hneGM?resourcekey=0-r-1X9AQr1AvIaxD7Hw3gkw&usp=sharing"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="inline-flex items-center justify-center gap-2
-                  px-5 py-3 rounded-xl bg-kraft-accent text-white
-                  font-semibold shadow hover:opacity-95 active:scale-[0.99]
-                  w-full sm:w-auto">
-          Voir toutes les photos de l'album
-        </a>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Vol en avion" class="gift-image w-full aspect-[4/3] object-cover" src="./images/air-journal_Aer-Lingus-A321XLR-600x310.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Vol en avion</h3>
+                <p class="text-xs text-kraft-muted mt-2">Paris - Dublin.</p>
+                <span class="gift-price">518 €</span>
+              </div>
+            </article>
+
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Location de voiture" class="gift-image w-full aspect-[4/3] object-cover" src="./images/toyota_yaris.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Location de la voiture</h3>
+                <p class="text-xs text-kraft-muted mt-2">Boîte auto obligatoire vu qu’ils roulent à gauche.</p>
+                <span class="gift-price">650 €</span>
+              </div>
+            </article>
+
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Essence road trip" class="gift-image w-full aspect-[4/3] object-cover" src="./images/Road trip.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Essence</h3>
+                <p class="text-xs text-kraft-muted mt-2">1 400 km de road trip le long de la Wild Atlantic Way.</p>
+                <span class="gift-price">600 €</span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Dublin -->
+        <div class="trip-stage">
+          <div class="trip-stage-header">
+            <div>
+              <p class="section-chip mb-3">Étape 2</p>
+              <h3 class="trip-stage-title">Dublin</h3>
+              <p class="trip-stage-desc">Premiers pas dans la capitale : hôtel, petit-déjeuner et découverte des lieux emblématiques.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Dublin Pass" class="gift-image w-full aspect-[4/3] object-cover" src="./images/Temple-Bar-Dublin.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Dublin Pass</h3>
+                <p class="text-xs text-kraft-muted mt-2">Visites des lieux emblématiques de la capitale.</p>
+                <span class="gift-price">220 €</span>
+              </div>
+            </article>
+
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Hôtel à Dublin" class="gift-image w-full aspect-[4/3] object-cover" src="./images/Trinity_College_-_Great_Court_02.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Dublin : hôtel</h3>
+                <p class="text-xs text-kraft-muted mt-2">3 nuits au Trinity College.</p>
+                <span class="gift-price">390 €</span>
+              </div>
+            </article>
+
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Petits-déjeuners à Dublin" class="gift-image w-full aspect-[4/3] object-cover" src="./images/Full-Irish-Breakfast-in-a-skillet.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Dublin : petits-déjeuners</h3>
+                <p class="text-xs text-kraft-muted mt-2">Irish breakfast.</p>
+                <span class="gift-price">36 €</span>
+              </div>
+            </article>
+
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Fish and chips à Dublin" class="gift-image w-full aspect-[4/3] object-cover" src="./images/unnamed.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Fish &amp; chips : Leo Burdock</h3>
+                <p class="text-xs text-kraft-muted mt-2">Famous fish &amp; chips since 1913!</p>
+                <span class="gift-price">30 €</span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Cobh -->
+        <div class="trip-stage">
+          <div class="trip-stage-header">
+            <div>
+              <p class="section-chip mb-3">Étape 3</p>
+              <h3 class="trip-stage-title">Cobh</h3>
+              <p class="trip-stage-desc">Une étape entre mémoire maritime, visite patrimoniale et vue sur la mer.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Hébergement à Cobh" class="gift-image w-full aspect-[4/3] object-cover" src="./images/707208607.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Cobh : hébergement 2 nuits</h3>
+                <p class="text-xs text-kraft-muted mt-2">Lynwood House, vue sur la mer et spa privatif.</p>
+                <span class="gift-price">370 €</span>
+              </div>
+            </article>
+
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Visite de Cobh" class="gift-image w-full aspect-[4/3] object-cover" src="images/smallhero-desktop.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Cobh : visite de la ville</h3>
+                <p class="text-xs text-kraft-muted mt-2">Visite guidée de Cobh et de Cork City Gaol.</p>
+                <span class="gift-price">60 €</span>
+              </div>
+            </article>
+
+            <article class="gift-card card">
+  <div class="gift-media bg-white flex items-center justify-center aspect-[4/3] overflow-hidden">
+    <img
+      alt="Titanic Experience à Cobh"
+      class="gift-image w-[72%] h-[72%] object-contain object-center"
+      src="images/whitestar.webp"
+    >
+  </div>
+  <div class="p-4">
+    <h3 class="text-sm font-semibold leading-snug">Cobh : Titanic Experience</h3>
+    <p class="text-xs text-kraft-muted mt-2">Bureau de la White Star Line.</p>
+    <span class="gift-price">26 €</span>
+  </div>
+</article>
+
+          </div>
+        </div>
+
+        <!-- Dingle -->
+        <div class="trip-stage">
+          <div class="trip-stage-header">
+            <div>
+              <p class="section-chip mb-3">Étape 4</p>
+              <h3 class="trip-stage-title">Dingle</h3>
+              <p class="trip-stage-desc">Entre baie, bateau, paysages et premier dîner déjà généreusement offert.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Excursion en bateau à Dingle" class="gift-image w-full aspect-[4/3] object-cover" src="./images/skelig.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Dingle : excursion en bateau</h3>
+                <p class="text-xs text-kraft-muted mt-2">Sortie en bateau et randonnées dans la baie.</p>
+                <span class="gift-price">170 €</span>
+              </div>
+            </article>
+
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Hébergement à Dingle" class="gift-image w-full aspect-[4/3] object-cover" src="./images/ireland-dunquin-pier-along-slea-head-drive.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Dingle : hébergement 1 nuit</h3>
+                <p class="text-xs text-kraft-muted mt-2">Mount Brandon Hostel et Ring of Kerry.</p>
+                <span class="gift-price">190 €</span>
+              </div>
+            </article>
+
+            <article class="gift-card card gift-offered">
+              <div class="gift-media">
+                <img alt="Dîner à Dingle offert" class="gift-image w-full aspect-[4/3] object-cover" src="images/fish-and-chips-dublin.jpg">
+                <span class="gift-badge">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.25 7.312a1 1 0 0 1-1.42.003L3.29 9.29a1 1 0 1 1 1.42-1.408l4.04 4.077 6.544-6.596a1 1 0 0 1 1.41-.073Z" clip-rule="evenodd"/>
+                  </svg>
+                  Offert
+                </span>
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Dingle : dîner</h3>
+                <p class="text-xs text-kraft-muted mt-2">Irish style !</p>
+                <span class="gift-price">60 €</span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Killarney -->
+        <div class="trip-stage">
+          <div class="trip-stage-header">
+            <div>
+              <p class="section-chip mb-3">Étape 5</p>
+              <h3 class="trip-stage-title">Killarney</h3>
+              <p class="trip-stage-desc">Nature, grand air et rythme sportif : cheval, vélo et soirées irlandaises.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Hébergement à Killarney" class="gift-image w-full aspect-[4/3] object-cover" src="./images/gap_of_dunloe1.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Killarney : hébergement 2 nuits</h3>
+                <p class="text-xs text-kraft-muted mt-2">Haven Suites.</p>
+                <span class="gift-price">330 €</span>
+              </div>
+            </article>
+
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Randonnée à cheval à Killarney" class="gift-image w-full aspect-[4/3] object-cover" src="./images/cheval.avif">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Killarney : randonnées à cheval</h3>
+                <p class="text-xs text-kraft-muted mt-2">Balade à cheval dans le parc national.</p>
+                <span class="gift-price">361 €</span>
+              </div>
+            </article>
+
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Location de vélo à Killarney" class="gift-image w-full aspect-[4/3] object-cover" src="./images/velo.avif">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Killarney : location de vélo</h3>
+                <p class="text-xs text-kraft-muted mt-2">Beaucoup d’endroits à visiter en peu de temps.</p>
+                <span class="gift-price">66 €</span>
+              </div>
+            </article>
+
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Dîners à Killarney" class="gift-image w-full aspect-[4/3] object-cover" src="./images/gastronomie-irlandaise.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Killarney : 3 dîners</h3>
+                <p class="text-xs text-kraft-muted mt-2">Irish style.</p>
+                <span class="gift-price">180 €</span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Côte Ouest -->
+        <div class="trip-stage">
+          <div class="trip-stage-header">
+            <div>
+              <p class="section-chip mb-3">Étape 6</p>
+              <h3 class="trip-stage-title">Côte ouest</h3>
+              <p class="trip-stage-desc">Une halte entre plage, falaises et route sauvage vers le nord-ouest.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="West Coast Lodge" class="gift-image w-full aspect-[4/3] object-cover" src="./images/190437084.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">West Coast Lodge : 1 nuit</h3>
+                <p class="text-xs text-kraft-muted mt-2">Lahinch et falaises de Moher.</p>
+                <span class="gift-price">121 €</span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Connemara -->
+        <div class="trip-stage">
+          <div class="trip-stage-header">
+            <div>
+              <p class="section-chip mb-3">Étape 7</p>
+              <h3 class="trip-stage-title">Connemara</h3>
+              <p class="trip-stage-desc">Paysages mythiques, abbaye et lac : l’étape la plus légendaire du voyage.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+            <article class="gift-card card gift-offered">
+              <div class="gift-media">
+                <img alt="Connemara offert" class="gift-image w-full aspect-[4/3] object-cover" src="images/kylemore.jpg">
+                <span class="gift-badge">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.25 7.312a1 1 0 0 1-1.42.003L3.29 9.29a1 1 0 1 1 1.42-1.408l4.04 4.077 6.544-6.596a1 1 0 0 1 1.41-.073Z" clip-rule="evenodd"/>
+                  </svg>
+                  Offert
+                </span>
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Connemara : 2 nuits</h3>
+                <p class="text-xs text-kraft-muted mt-2">Abbaye de Kylemore et randonnées dans le parc national.</p>
+                <span class="gift-price">280 €</span>
+              </div>
+            </article>
+
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Dîner à Kylemore" class="gift-image w-full aspect-[4/3] object-cover" src="./images/irish_stew.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Kylemore : dîner</h3>
+                <p class="text-xs text-kraft-muted mt-2">En amoureux face au lac.</p>
+                <span class="gift-price">65 €</span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Galway -->
+        <div class="trip-stage">
+          <div class="trip-stage-header">
+            <div>
+              <p class="section-chip mb-3">Étape 8</p>
+              <h3 class="trip-stage-title">Galway</h3>
+              <p class="trip-stage-desc">Dernières découvertes, îles d’Aran, détente au spa et dîner de clôture.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Galway et îles d'Aran" class="gift-image w-full aspect-[4/3] object-cover" src="images/DSC_5960.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Galway &amp; îles d'Aran</h3>
+                <p class="text-xs text-kraft-muted mt-2">Découverte de la ville et des traditions locales.</p>
+                <span class="gift-price">140 €</span>
+              </div>
+            </article>
+
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Dîner à Galway" class="gift-image w-full aspect-[4/3] object-cover" src="./images/Irish-Recipes.webp">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Galway : dîner</h3>
+                <p class="text-xs text-kraft-muted mt-2">Irish style.</p>
+                <span class="gift-price">60 €</span>
+              </div>
+            </article>
+
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Shearwater hotel et spa" class="gift-image w-full aspect-[4/3] object-cover" src="./images/d9ea9f67.avif">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Galway : Shearwater Hotel &amp; Spa</h3>
+                <p class="text-xs text-kraft-muted mt-2">Une vraie pause repos après le périple.</p>
+                <span class="gift-price">300 €</span>
+              </div>
+            </article>
+
+            <article class="gift-card card gift-offered">
+              <div class="gift-media">
+                <img alt="Afternoon tea offert" class="gift-image w-full aspect-[4/3] object-cover" src="./images/the_shearwater_hotel_-_00018_copy.jpg">
+                <span class="gift-badge">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.25 7.312a1 1 0 0 1-1.42.003L3.29 9.29a1 1 0 1 1 1.42-1.408l4.04 4.077 6.544-6.596a1 1 0 0 1 1.41-.073Z" clip-rule="evenodd"/>
+                  </svg>
+                  Offert
+                </span>
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Galway : afternoon tea</h3>
+                <p class="text-xs text-kraft-muted mt-2">Petite pause sucrée.</p>
+                <span class="gift-price">40 €</span>
+              </div>
+            </article>
+
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Spa à Galway" class="gift-image w-full aspect-[4/3] object-cover" src="./images/shearwater_hotel_-_spa_cms_treatment_room.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Galway : spa</h3>
+                <p class="text-xs text-kraft-muted mt-2">Un moment de détente à deux.</p>
+                <span class="gift-price">200 €</span>
+              </div>
+            </article>
+
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Dîner de clôture" class="gift-image w-full aspect-[4/3] object-cover" src="./images/rest_image_1_1.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Galway : dîner de clôture</h3>
+                <p class="text-xs text-kraft-muted mt-2">Dernier dîner du voyage.</p>
+                <span class="gift-price">80 €</span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Après le voyage -->
+        <div class="trip-stage">
+          <div class="trip-stage-header">
+            <div>
+              <p class="section-chip mb-3">Étape 9</p>
+              <h3 class="trip-stage-title">Après le voyage</h3>
+              <p class="trip-stage-desc">Un souvenir durable pour continuer les balades à deux une fois rentrés.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Vélo gravel 1" class="gift-image w-full aspect-[4/3] object-cover" src="./images/maxresdefault.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Vélo gravel #1</h3>
+                <p class="text-xs text-kraft-muted mt-2">Un vélo de qualité pour de futures balades.</p>
+                <span class="gift-price">800 €</span>
+
+                <div class="gift-progress" aria-label="Progression du financement du vélo gravel numéro 1">
+                  <div class="gift-progress-bar">
+                    <div class="gift-progress-fill" style="width: 50%;"></div>
+                  </div>
+                  <p class="gift-progress-text">400 € restants</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="gift-card card">
+              <div class="gift-media">
+                <img alt="Vélo gravel 2" class="gift-image w-full aspect-[4/3] object-cover" src="./images/maxresdefault.jpg">
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold leading-snug">Vélo gravel #2</h3>
+                <p class="text-xs text-kraft-muted mt-2">Pour des balades en amoureux au retour.</p>
+                <span class="gift-price">800 €</span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+          <div class="rounded-2xl border border-kraft-border bg-kraft-bg p-5 sm:p-6 shadow-sm">
+            <h3 class="font-semibold text-lg mb-2">PayPal</h3>
+            <p class="text-sm text-kraft-muted mb-4">
+              Scannez le QR code pour accéder au paiement PayPal.
+            </p>
+            <div class="flex justify-center">
+              <img id="paypalQr" alt="QR code PayPal" class="w-72 max-w-full rounded-xl border border-kraft-border bg-white p-2" src="./paypal.jpg" />
+            </div>
+            <p class="text-xs text-kraft-muted mt-3 text-center">Montant libre.</p>
+          </div>
+
+          <div class="rounded-2xl border border-kraft-border bg-kraft-bg p-5 sm:p-6 shadow-sm">
+            <h3 class="font-semibold text-lg mb-2">Virement bancaire</h3>
+            <p class="text-sm text-kraft-muted mb-4">
+              N’hésitez pas à indiquer dans l’objet les activités auxquelles vous participez.
+            </p>
+            <dl class="text-sm space-y-3">
+              <div class="flex gap-3">
+                <dt class="w-28 text-kraft-muted">Titulaire</dt>
+                <dd class="font-medium">M DUBOIS Amaury</dd>
+              </div>
+              <div class="flex gap-3">
+                <dt class="w-28 text-kraft-muted">IBAN</dt>
+                <dd class="font-mono break-all">FR76 4061 8803 5600 0401 4439 648</dd>
+              </div>
+              <div class="flex gap-3">
+                <dt class="w-28 text-kraft-muted">BIC</dt>
+                <dd class="font-mono">BOUS FRPP XXX</dd>
+              </div>
+              <div class="flex gap-3">
+                <dt class="w-28 text-kraft-muted">Objet</dt>
+                <dd>Mariage Honorine &amp; Amaury</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+
       </div>
     </div>
+  </section>
 
-    <div class="p-6">
-      <input id="fileInput" type="file" accept="image/*" multiple class="hidden">
-      <div id="grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 min-h-[160px]"></div>
-      <p id="uploadMsg" class="text-sm text-kraft-text mt-4 text-center"></p>
-      <p id="empty" class="text-sm text-kraft-muted mt-3 hidden">Aucune image trouvée pour le moment…</p>
+  <!-- Galerie photos -->
+  <section class="max-w-5xl mx-auto px-4 mb-10">
+    <div class="rounded-3xl bg-kraft-card border border-kraft-border shadow-soft overflow-hidden">
+      <div class="p-6 sm:p-8 border-b border-kraft-border flex items-start justify-between gap-4 flex-col sm:flex-row">
+        <div>
+          <p class="section-chip mb-3">Album partagé</p>
+          <h2 class="text-xl sm:text-2xl font-semibold">Partageons nos photos ici</h2>
+          <p class="text-sm text-kraft-muted mt-2">Ajoutez vos photos et découvrez les 10 dernières en direct.</p>
+        </div>
+
+        <div class="flex items-stretch gap-2 flex-col sm:flex-row w-full sm:w-auto">
+          <button id="btnPickUpload"
+                  class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-kraft-accent text-white font-semibold shadow hover:opacity-95 active:scale-[0.99] disabled:opacity-50 w-full sm:w-auto">
+            <span aria-hidden="true">🖼️</span>
+            Choisir des photos
+          </button>
+
+          <button id="btnRefresh"
+                  class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-kraft-border bg-kraft-accent text-white font-semibold shadow hover:opacity-95 active:scale-[0.99] w-full sm:w-auto">
+            Rafraîchir
+          </button>
+
+          <a href="https://drive.google.com/drive/folders/0B1Pqut4RPRDSODY0Tl9iS3hneGM?resourcekey=0-r-1X9AQr1AvIaxD7Hw3gkw&usp=sharing"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-kraft-accent text-white font-semibold shadow hover:opacity-95 active:scale-[0.99] w-full sm:w-auto">
+            Voir toutes les photos
+          </a>
+        </div>
+      </div>
+
+      <div class="p-6 sm:p-8">
+        <input id="fileInput" type="file" accept="image/*" multiple class="hidden">
+        <div id="grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 min-h-[160px]"></div>
+        <p id="uploadMsg" class="text-sm text-kraft-text mt-4 text-center"></p>
+        <p id="empty" class="text-sm text-kraft-muted mt-3 hidden">Aucune image trouvée pour le moment…</p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
+  <footer class="text-center text-xs text-kraft-muted py-8">
+    Page de partage — Honorine &amp; Amaury
+  </footer>
 
-<footer class="text-center text-xs text-kraft-muted py-8">
-  Page de partage — Honorine &amp; Amaury
-</footer>
+  <script>
+    const WEBHOOK = "https://script.google.com/macros/s/AKfycbyEaTVz3z04727WLIfN4gTiLb1vLnCn1Cj44_1cKbvQfF99DfiiaRoHlelEJT7_jPg7-w/exec";
+    const TOKEN = "secret123";
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    const grid = document.getElementById('grid');
+    const empty = document.getElementById('empty');
+    const btnRef = document.getElementById('btnRefresh');
 
-<script>
-  // =====================
-  // CONFIG
-  // =====================
-  const WEBHOOK = "https://script.google.com/macros/s/AKfycbyEaTVz3z04727WLIfN4gTiLb1vLnCn1Cj44_1cKbvQfF99DfiiaRoHlelEJT7_jPg7-w/exec";
-  const TOKEN   = "secret123";
-
-  // =====================
-  // QR Code page
-  // =====================
-  new QRCode(document.getElementById("qrcode"), {
-    text: window.location.href,
-    width: 160,
-    height: 160
-  });
-
-  // =====================
-  // Galerie (Drive)
-  // =====================
-  const grid   = document.getElementById('grid');
-  const empty  = document.getElementById('empty');
-  const btnRef = document.getElementById('btnRefresh');
-
-  function showSkeleton(n = 10) {
-    grid.innerHTML = '';
-    for (let i = 0; i < n; i++) {
-      const s = document.createElement('div');
-      s.className = 'h-40 rounded-xl shimmer';
-      grid.appendChild(s);
+    function showSkeleton(n = 10) {
+      grid.innerHTML = '';
+      for (let i = 0; i < n; i++) {
+        const s = document.createElement('div');
+        s.className = 'h-40 rounded-xl shimmer';
+        grid.appendChild(s);
+      }
+      empty.classList.add('hidden');
     }
-    empty.classList.add('hidden');
-  }
 
-  function render(files) {
-    grid.innerHTML = '';
-    if (!files || files.length === 0) {
-      empty.classList.remove('hidden');
-      return;
-    }
-    empty.classList.add('hidden');
+    function render(files) {
+      grid.innerHTML = '';
 
-    for (const f of files) {
-      const a = document.createElement('a');
-      a.href = f.openUrl || f.viewUrl || '#';
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      a.className = 'card block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm';
-
-      const img = document.createElement('img');
-      const src = f.thumbUrl || f.viewUrl || '';
-      img.src = src ? (src + (src.includes('?') ? '&' : '?') + 'cb=' + Date.now()) : '';
-      img.alt = f.name || 'photo';
-      img.loading = 'lazy';
-      img.referrerPolicy = 'no-referrer';
-      img.className = 'w-full h-40 object-cover';
-
-      const bar = document.createElement('div');
-      bar.className = 'px-3 py-2 text-xs text-kraft-muted flex items-center justify-between gap-2';
-
-      const name = document.createElement('div');
-      name.className = 'truncate';
-      name.textContent = (f.name || '').slice(0, 40);
-
-      const time = document.createElement('time');
-      time.textContent = f.createdTime ? new Date(f.createdTime).toLocaleString() : '';
-      time.className = 'text-[10px] text-kraft-muted whitespace-nowrap';
-
-      bar.appendChild(name);
-      bar.appendChild(time);
-      a.appendChild(img);
-      a.appendChild(bar);
-      grid.appendChild(a);
-    }
-  }
-
-  async function loadLatest() {
-    try {
-      showSkeleton();
-      const url = `${WEBHOOK}?action=list&token=${encodeURIComponent(TOKEN)}&cb=${Date.now()}`;
-      const res = await fetch(url, { method: 'GET' });
-
-      const ct = res.headers.get('content-type') || '';
-      if (!ct.includes('application/json')) {
-        const txt = await res.text();
-        console.warn('Réponse non-JSON:', txt.slice(0, 300));
-        throw new Error('Réponse non-JSON (déploiement / accès ?)');
+      if (!files || files.length === 0) {
+        empty.classList.remove('hidden');
+        return;
       }
 
-      const data = await res.json();
-      if (res.ok && data.ok) render(data.files);
-      else {
-        console.warn('List failed:', data);
+      empty.classList.add('hidden');
+
+      for (const f of files) {
+        const a = document.createElement('a');
+        a.href = f.openUrl || f.viewUrl || '#';
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.className = 'card block rounded-xl overflow-hidden bg-kraft-bg border border-kraft-border shadow-sm';
+
+        const img = document.createElement('img');
+        const src = f.thumbUrl || f.viewUrl || '';
+        img.src = src ? (src + (src.includes('?') ? '&' : '?') + 'cb=' + Date.now()) : '';
+        img.alt = f.name || 'photo';
+        img.loading = 'lazy';
+        img.referrerPolicy = 'no-referrer';
+        img.className = 'w-full h-40 object-cover';
+
+        const bar = document.createElement('div');
+        bar.className = 'px-3 py-2 text-xs text-kraft-muted flex items-center justify-between gap-2';
+
+        const name = document.createElement('div');
+        name.className = 'truncate';
+        name.textContent = (f.name || '').slice(0, 40);
+
+        const time = document.createElement('time');
+        time.textContent = f.createdTime ? new Date(f.createdTime).toLocaleString('fr-FR') : '';
+        time.className = 'text-[10px] text-kraft-muted whitespace-nowrap';
+
+        bar.appendChild(name);
+        bar.appendChild(time);
+        a.appendChild(img);
+        a.appendChild(bar);
+        grid.appendChild(a);
+      }
+    }
+
+    async function loadLatest() {
+      try {
+        showSkeleton();
+
+        const url = `${WEBHOOK}?action=list&token=${encodeURIComponent(TOKEN)}&cb=${Date.now()}`;
+        const res = await fetch(url, { method: 'GET' });
+
+        const ct = res.headers.get('content-type') || '';
+        if (!ct.includes('application/json')) {
+          const txt = await res.text();
+          console.warn('Réponse non-JSON:', txt.slice(0, 300));
+          throw new Error('Réponse non-JSON (déploiement / accès ?)');
+        }
+
+        const data = await res.json();
+
+        if (res.ok && data.ok) {
+          render(data.files);
+        } else {
+          console.warn('List failed:', data);
+          grid.innerHTML = '';
+          empty.classList.remove('hidden');
+        }
+      } catch (e) {
+        console.warn('loadLatest error:', e);
         grid.innerHTML = '';
         empty.classList.remove('hidden');
       }
-    } catch (e) {
-      console.warn('loadLatest error:', e);
-      grid.innerHTML = '';
-      empty.classList.remove('hidden');
     }
-  }
 
-  btnRef.addEventListener('click', loadLatest);
+    btnRef.addEventListener('click', loadLatest);
 
-  // =====================
-  // Upload + overlay + progression
-  // =====================
-  const input = document.getElementById('fileInput');
-  const btnPick = document.getElementById('btnPickUpload');
-  const msg = document.getElementById('uploadMsg');
+    const input = document.getElementById('fileInput');
+    const btnPick = document.getElementById('btnPickUpload');
+    const msg = document.getElementById('uploadMsg');
 
-  const overlayEl = document.getElementById('uploadOverlay');
-  const overlayProgressText = document.getElementById('overlayProgressText');
-  const overlayProgressBar = document.getElementById('overlayProgressBar');
+    const overlayEl = document.getElementById('uploadOverlay');
+    const overlayProgressText = document.getElementById('overlayProgressText');
+    const overlayProgressBar = document.getElementById('overlayProgressBar');
 
-  const BTN_LABEL_IDLE = btnPick.textContent;
+    const BTN_LABEL_IDLE = btnPick.textContent;
 
-  function showOverlay() {
-    overlayEl.classList.remove('hidden');
-    overlayEl.classList.add('flex');
-    document.body.classList.add('overflow-hidden');
-  }
-  function hideOverlay() {
-    overlayEl.classList.add('hidden');
-    overlayEl.classList.remove('flex');
-    document.body.classList.remove('overflow-hidden');
-  }
-
-  function setBtnLoading(isLoading) {
-    if (isLoading) {
-      btnPick.disabled = true;
-      btnPick.textContent = 'Envoi…';
-    } else {
-      btnPick.disabled = false;
-      btnPick.textContent = BTN_LABEL_IDLE;
+    function showOverlay() {
+      overlayEl.classList.remove('hidden');
+      overlayEl.classList.add('flex');
+      document.body.classList.add('overflow-hidden');
     }
-  }
 
-  function setProgress(done, total) {
-    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-    overlayProgressText.textContent = `${done}/${total} envoyée(s)…`;
-    overlayProgressBar.style.width = `${pct}%`;
-    msg.textContent = `Envoi en cours… (${done}/${total})`;
-  }
+    function hideOverlay() {
+      overlayEl.classList.add('hidden');
+      overlayEl.classList.remove('flex');
+      document.body.classList.remove('overflow-hidden');
+    }
 
-  function fileToDataURL(file) {
-    return new Promise((resolve, reject) => {
-      const fr = new FileReader();
-      fr.onload = () => resolve(fr.result);
-      fr.onerror = reject;
-      fr.readAsDataURL(file);
-    });
-  }
+    function setBtnLoading(isLoading) {
+      if (isLoading) {
+        btnPick.disabled = true;
+        btnPick.textContent = 'Envoi…';
+      } else {
+        btnPick.disabled = false;
+        btnPick.textContent = BTN_LABEL_IDLE;
+      }
+    }
 
-  btnPick.addEventListener('click', () => input.click());
+    function setProgress(done, total) {
+      const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+      overlayProgressText.textContent = `${done}/${total} envoyée(s)…`;
+      overlayProgressBar.style.width = `${pct}%`;
+      msg.textContent = `Envoi en cours… (${done}/${total})`;
+    }
 
-  input.addEventListener('change', async () => {
-    const files = input.files;
-    if (!files || files.length === 0) return;
+    function fileToDataURL(file) {
+      return new Promise((resolve, reject) => {
+        const fr = new FileReader();
+        fr.onload = () => resolve(fr.result);
+        fr.onerror = reject;
+        fr.readAsDataURL(file);
+      });
+    }
 
-    const total = files.length;
-    let done = 0;
+    btnPick.addEventListener('click', () => input.click());
 
-    showOverlay();
-    setBtnLoading(true);
-    overlayProgressBar.style.width = '0%';
-    overlayProgressText.textContent = '0/' + total + ' envoyée(s)…';
-    msg.textContent = 'Envoi en cours…';
+    input.addEventListener('change', async () => {
+      const files = input.files;
+      if (!files || files.length === 0) return;
 
-    let ok = 0, fail = 0;
-    let lastErr = null;
+      const total = files.length;
+      let done = 0;
 
-    try {
-      for (const f of files) {
-        try {
-          const dataURL = await fileToDataURL(f);
-          const payload = {
-            filename: f.name,
-            mimeType: f.type || 'application/octet-stream',
-            dataBase64: dataURL
-          };
+      showOverlay();
+      setBtnLoading(true);
+      overlayProgressBar.style.width = '0%';
+      overlayProgressText.textContent = `0/${total} envoyée(s)…`;
+      msg.textContent = 'Envoi en cours…';
 
-          const res = await fetch(`${WEBHOOK}?token=${encodeURIComponent(TOKEN)}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain' },
-            body: JSON.stringify(payload)
-          });
+      let ok = 0;
+      let fail = 0;
+      let lastErr = null;
 
-          const data = await res.json().catch(() => ({}));
-          if (res.ok && data.ok) {
-            ok++;
-          } else {
+      try {
+        for (const f of files) {
+          try {
+            const dataURL = await fileToDataURL(f);
+
+            const payload = {
+              filename: f.name,
+              mimeType: f.type || 'application/octet-stream',
+              dataBase64: dataURL
+            };
+
+            const res = await fetch(`${WEBHOOK}?token=${encodeURIComponent(TOKEN)}`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'text/plain' },
+              body: JSON.stringify(payload)
+            });
+
+            const data = await res.json().catch(() => ({}));
+
+            if (res.ok && data.ok) {
+              ok++;
+            } else {
+              fail++;
+              lastErr = data?.error || `HTTP ${res.status}`;
+              console.warn('Upload failed:', data);
+            }
+          } catch (e) {
             fail++;
-            lastErr = (data && data.error) ? data.error : `HTTP ${res.status}`;
-            console.warn('Upload failed:', data);
+            lastErr = String(e);
+            console.warn('Upload exception:', e);
+          } finally {
+            done++;
+            setProgress(done, total);
           }
-        } catch (e) {
-          fail++;
-          lastErr = String(e);
-          console.warn('Upload exception:', e);
-        } finally {
-          done++;
-          setProgress(done, total);
         }
+
+        if (ok > 0) {
+          await loadLatest();
+        }
+
+        msg.textContent =
+          fail === 0
+            ? `✅ ${ok} photo(s) envoyée(s). Merci !`
+            : `⚠️ ${ok} ok, ${fail} erreur(s). Dernière erreur : ${lastErr || 'inconnue'}`;
+      } finally {
+        hideOverlay();
+        setBtnLoading(false);
+        input.value = '';
       }
+    });
 
-      if (ok > 0) {
-        await loadLatest();
-      }
-
-      msg.textContent =
-        fail === 0
-          ? `✅ ${ok} photo(s) envoyée(s). Merci !`
-          : `⚠️ ${ok} ok, ${fail} erreur(s). Dernière erreur: ${lastErr || 'inconnue'}`;
-    } finally {
-      hideOverlay();
-      setBtnLoading(false);
-      input.value = '';
-    }
-  });
-
-  // =====================
-  // Vidéo click-to-play
-  // =====================
-  const video   = document.getElementById('introVideo');
-  const overlay = document.getElementById('videoOverlay');
-  const card    = document.getElementById('videoCard');
-
-  card.addEventListener('click', () => {
-    video.muted = false;
-    video.play();
-    overlay.style.opacity = '0';
-    overlay.style.pointerEvents = 'none';
-  });
-
-  video.addEventListener('ended', () => {
-    overlay.style.opacity = '1';
-    overlay.style.pointerEvents = 'auto';
-  });
-
-  loadLatest();
-</script>
+    loadLatest();
+  </script>
 
 </body>
 </html>
